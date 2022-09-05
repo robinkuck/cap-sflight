@@ -10,15 +10,19 @@ build-parameters:
   before-all:
     - builder: custom
       commands:
-        # set 'CDS_ENV=node' to pick the 'node' build profile settings, defined in package.json
-        - npx -p @sap/cds-dk cds build --profile production,node
+        - npx -p @sap/cds-dk cds build --profile production,java
+        - npx -p @sap/cds-dk cds build --profile production,hana
 
 modules:
   # --------------------- SERVER MODULE ------------------------
   - name: sflight-srv
   # ------------------------------------------------------------
-    type: nodejs
-    path: gen/srv
+    type: java
+    path: srv
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud
+      JBP_CONFIG_COMPONENTS: "jres: ['com.sap.xs.java.buildpack.jdk.SAPMachineJDK']"
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ jre: { version: 11.+ } }'
     requires:
       - name: sflight-db
       - name: sflight-uaa
@@ -27,7 +31,10 @@ modules:
         properties:
           srv-url: ${default-url}
     build-parameters:
-      builder: npm-ci
+      builder: custom
+      commands:
+        - mvn clean package -DskipTests=true
+      build-result: target/*-exec.jar
       ignore: ["node_modules/"]
 
   # -------------------- SIDECAR MODULE ------------------------
@@ -127,18 +134,18 @@ resources:
       service-plan: application
       path: ./app/travel_processor/xs-security.json
       config:
-        xsappname: sflight-${space}
+        xsappname: sflight-d070264
         tenant-mode: dedicated
         role-collections:
-          - name: 'sflight-reviewer-${space}'
+          - name: 'sflight-reviewer-d070264'
             description: Review travels
             role-template-references:
               - $XSAPPNAME.reviewer
-          - name: 'sflight-processor-${space}'
+          - name: 'sflight-processor-d070264'
             description: Process travels
             role-template-references:
               - $XSAPPNAME.processor
-          - name: 'sflight-admin-${space}'
+          - name: 'sflight-admin-d070264'
             description: Manage travels
             role-template-references:
               - $XSAPPNAME.admin
