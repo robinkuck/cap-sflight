@@ -36,6 +36,11 @@
     "sqlite3": "^5"
   },
   "cds": {
+    "env": {
+      "odata": {
+        "protectMetadata": false 
+      }
+    },
     "requires": {
       "db": {
         "kind": "sql"
