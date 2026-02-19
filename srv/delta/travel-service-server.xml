@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://docs.oasis-open.org/odata/ns/edmx http://docs.oasis-open.org/odata/odata/v4.0/os/schemas/edmx.xsd http://docs.oasis-open.org/odata/ns/edm http://docs.oasis-open.org/odata/odata/v4.0/os/schemas/edm.xsd">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="vocabularies/com.sap.cloud.server.odata.cache.v1.xml">
+        <edmx:Include Namespace="com.sap.cloud.server.odata.cache.v1" Alias="Cache"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="vocabularies/com.sap.cloud.server.odata.security.v1.xml">
+        <edmx:Include Namespace="com.sap.cloud.server.odata.security.v1" Alias="Security"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="vocabularies/com.sap.cloud.server.odata.sql.v1.xml">
+        <edmx:Include Namespace="com.sap.cloud.server.odata.sql.v1" Alias="SQL"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="TravelService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityType Name="Airline">
+                <Key>
+                    <PropertyRef Name="AirlineID"/>
+                </Key>
+                <Property Name="AirlineID" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="AirlinePicURL" Type="Edm.String" Nullable="true">
+                    <Annotation Term="UI.IsImageURL" Bool="true"/>
+                </Property>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Airport">
+                <Key>
+                    <PropertyRef Name="AirportID"/>
+                </Key>
+                <Property Name="AirportID" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <Property Name="CountryCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Country}"/>
+                            <PropertyValue Property="CollectionPath" String="Countries"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CountryCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <NavigationProperty Name="CountryCode" Type="TravelService.Countries" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <ReferentialConstraint Property="CountryCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Booking">
+                <Key>
+                    <PropertyRef Name="BookingUUID"/>
+                </Key>
+                <Property Name="BookingUUID" Type="Edm.Guid" Nullable="false">
+                    <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+                </Property>
+                <Property Name="BookingDate" Type="Edm.Date" Nullable="true"/>
+                <Property Name="BookingID" Type="Edm.Int32" Nullable="true">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="BookingStatus_code" Type="Edm.String" Nullable="true" MaxLength="1" DefaultValue="N">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="BookingStatus"/>
+                            <PropertyValue Property="CollectionPath" String="BookingStatus"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="BookingStatus_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="ConnectionID" Type="Edm.String" Nullable="true" MaxLength="4">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="FlightDate" Type="Edm.Date" Nullable="true">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="FlightPrice" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="to_Carrier_AirlineID" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="to_Customer_CustomerID" Type="Edm.String" Nullable="true" MaxLength="6">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="to_Travel_TravelUUID" Type="Edm.Guid" Nullable="true"/>
+                <NavigationProperty Name="BookingStatus" Type="TravelService.BookingStatus" Nullable="true">
+                    <ReferentialConstraint Property="BookingStatus_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_BookSupplement" Type="Collection(TravelService.BookingSupplement)" Partner="to_Booking">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Carrier" Type="TravelService.Airline" Nullable="true">
+                    <ReferentialConstraint Property="to_Carrier_AirlineID" ReferencedProperty="AirlineID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Customer" Type="TravelService.Passenger" Nullable="true">
+                    <ReferentialConstraint Property="to_Customer_CustomerID" ReferencedProperty="CustomerID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Flight" Type="TravelService.Flight" Nullable="true">
+                    <ReferentialConstraint Property="ConnectionID" ReferencedProperty="ConnectionID"/>
+                    <ReferentialConstraint Property="FlightDate" ReferencedProperty="FlightDate"/>
+                    <ReferentialConstraint Property="to_Carrier_AirlineID" ReferencedProperty="AirlineID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Travel" Type="TravelService.Travel" Nullable="true" Partner="to_Booking">
+                    <ReferentialConstraint Property="to_Travel_TravelUUID" ReferencedProperty="TravelUUID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="BookingStatus">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="1">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="New"/>
+                                <PropertyValue Property="Value" String="N"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Booked"/>
+                                <PropertyValue Property="Value" String="B"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                <PropertyValue Property="Value" String="X"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.BookingStatus_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="BookingStatus_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="1">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="New"/>
+                                <PropertyValue Property="Value" String="N"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Booked"/>
+                                <PropertyValue Property="Value" String="B"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                <PropertyValue Property="Value" String="X"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+            </EntityType>
+            <EntityType Name="BookingSupplement">
+                <Key>
+                    <PropertyRef Name="BookSupplUUID"/>
+                </Key>
+                <Property Name="BookSupplUUID" Type="Edm.Guid" Nullable="false">
+                    <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+                </Property>
+                <Property Name="BookingSupplementID" Type="Edm.Int32" Nullable="true">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="to_Booking_BookingUUID" Type="Edm.Guid" Nullable="true"/>
+                <Property Name="to_Supplement_SupplementID" Type="Edm.String" Nullable="true" MaxLength="10">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="to_Travel_TravelUUID" Type="Edm.Guid" Nullable="true"/>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Booking" Type="TravelService.Booking" Nullable="true" Partner="to_BookSupplement">
+                    <ReferentialConstraint Property="to_Booking_BookingUUID" ReferencedProperty="BookingUUID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Supplement" Type="TravelService.Supplement" Nullable="true">
+                    <ReferentialConstraint Property="to_Supplement_SupplementID" ReferencedProperty="SupplementID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Travel" Type="TravelService.Travel" Nullable="true">
+                    <ReferentialConstraint Property="to_Travel_TravelUUID" ReferencedProperty="TravelUUID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ClientRegistration">
+                <Key>
+                    <PropertyRef Name="ClientID"/>
+                </Key>
+                <Property Name="ClientID" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="AuthorizedUser" Type="Edm.String" Nullable="true" MaxLength="200"/>
+                <Property Name="ClientGUID" Type="Edm.Guid" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Countries">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CountryCode}"/>
+                    <Annotation Term="Common.Text" Path="name"/>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.Countries_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="Countries_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CountryCode}"/>
+                    <Annotation Term="Common.Text" Path="name"/>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+            </EntityType>
+            <EntityType Name="Currencies">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CurrencyCode}"/>
+                    <Annotation Term="Common.Text" Path="name"/>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="exponent" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="minor" Type="Edm.String" Nullable="true"/>
+                <Property Name="minorUnit" Type="Edm.Int16" Nullable="true">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CurrencyMinorUnit}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+                <Property Name="numcode" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="symbol" Type="Edm.String" Nullable="true" MaxLength="5">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CurrencySymbol}"/>
+                </Property>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.Currencies_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3">
+                    <Annotation Term="Common.Label" String="{i18n&gt;CurrencyCode}"/>
+                    <Annotation Term="Common.Text" Path="name"/>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+            </EntityType>
+            <EntityType Name="Flight">
+                <Key>
+                    <PropertyRef Name="AirlineID"/>
+                    <PropertyRef Name="FlightDate"/>
+                    <PropertyRef Name="ConnectionID"/>
+                </Key>
+                <Property Name="AirlineID" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="FlightDate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="ConnectionID" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="MaximumSeats" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="OccupiedSeats" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="PlaneType" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3"/>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Airline" Type="TravelService.Airline" Nullable="true">
+                    <ReferentialConstraint Property="AirlineID" ReferencedProperty="AirlineID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Connection" Type="TravelService.FlightConnection" Nullable="true">
+                    <ReferentialConstraint Property="AirlineID" ReferencedProperty="AirlineID"/>
+                    <ReferentialConstraint Property="ConnectionID" ReferencedProperty="ConnectionID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="FlightConnection">
+                <Key>
+                    <PropertyRef Name="ConnectionID"/>
+                    <PropertyRef Name="AirlineID"/>
+                </Key>
+                <Property Name="ConnectionID" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="AirlineID" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="ArrivalTime" Type="Edm.TimeOfDay" Nullable="true"/>
+                <Property Name="DepartureAirport_AirportID" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="DepartureTime" Type="Edm.TimeOfDay" Nullable="true"/>
+                <Property Name="DestinationAirport_AirportID" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="Distance" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="DistanceUnit" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <NavigationProperty Name="DepartureAirport" Type="TravelService.Airport" Nullable="true">
+                    <ReferentialConstraint Property="DepartureAirport_AirportID" ReferencedProperty="AirportID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="DestinationAirport" Type="TravelService.Airport" Nullable="true">
+                    <ReferentialConstraint Property="DestinationAirport_AirportID" ReferencedProperty="AirportID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Airline" Type="TravelService.Airline" Nullable="true">
+                    <ReferentialConstraint Property="AirlineID" ReferencedProperty="AirlineID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Passenger">
+                <Key>
+                    <PropertyRef Name="CustomerID"/>
+                </Key>
+                <Property Name="CustomerID" Type="Edm.String" Nullable="false" MaxLength="6"/>
+                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <Property Name="CountryCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Country}"/>
+                            <PropertyValue Property="CollectionPath" String="Countries"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CountryCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="EMailAddress" Type="Edm.String" Nullable="true" MaxLength="256"/>
+                <Property Name="FirstName" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastName" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <Property Name="PhoneNumber" Type="Edm.String" Nullable="true" MaxLength="30"/>
+                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Street" Type="Edm.String" Nullable="true" MaxLength="60"/>
+                <Property Name="Title" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <NavigationProperty Name="CountryCode" Type="TravelService.Countries" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <ReferentialConstraint Property="CountryCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Supplement">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="SupplementID"/>
+                </Key>
+                <Property Name="SupplementID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="Description" Type="Edm.String" Nullable="true" MaxLength="1024"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3"/>
+                <Property Name="Type_code" Type="Edm.String" Nullable="true" MaxLength="2">
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="SupplementType"/>
+                            <PropertyValue Property="CollectionPath" String="SupplementType"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="Type_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Type" Type="TravelService.SupplementType" Nullable="true">
+                    <ReferentialConstraint Property="Type_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.Supplement_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="SupplementType">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="2">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Beverage"/>
+                                <PropertyValue Property="Value" String="BV"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Meal"/>
+                                <PropertyValue Property="Value" String="ML"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Luggage"/>
+                                <PropertyValue Property="Value" String="LU"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Extra"/>
+                                <PropertyValue Property="Value" String="EX"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.SupplementType_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="SupplementType_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="2">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Beverage"/>
+                                <PropertyValue Property="Value" String="BV"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Meal"/>
+                                <PropertyValue Property="Value" String="ML"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Luggage"/>
+                                <PropertyValue Property="Value" String="LU"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Extra"/>
+                                <PropertyValue Property="Value" String="EX"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+            </EntityType>
+            <EntityType Name="Supplement_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="SupplementID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="SupplementID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Description" Type="Edm.String" Nullable="true" MaxLength="1024"/>
+            </EntityType>
+            <EntityType Name="Travel">
+                <Key>
+                    <PropertyRef Name="TravelUUID"/>
+                </Key>
+                <Property Name="TravelUUID" Type="Edm.Guid" Nullable="false">
+                    <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+                </Property>
+                <Property Name="BeginDate" Type="Edm.Date" Nullable="true">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="BookingFee" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3" DefaultValue="0"/>
+                <Property Name="CurrencyCode_code" Type="Edm.String" Nullable="true" MaxLength="3" DefaultValue="EUR">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Currency}"/>
+                            <PropertyValue Property="CollectionPath" String="Currencies"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CurrencyCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="Description" Type="Edm.String" Nullable="true" MaxLength="1024"/>
+                <Property Name="EndDate" Type="Edm.Date" Nullable="true">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="GoGreen" Type="Edm.Boolean" Nullable="true" DefaultValue="false"/>
+                <Property Name="GreenFee" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;ChangedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="TotalPrice" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="3">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="TravelID" Type="Edm.Int32" Nullable="true" DefaultValue="0">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="TravelStatus_code" Type="Edm.String" Nullable="true" MaxLength="1" DefaultValue="O">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="TravelStatus"/>
+                            <PropertyValue Property="CollectionPath" String="TravelStatus"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="TravelStatus_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="TreesPlanted" Type="Edm.Int32" Nullable="true">
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                </Property>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Nullable="true" Precision="7">
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedAt}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="createdBy" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Core.Description" String="{i18n&gt;UserID.Description}"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;CreatedBy}"/>
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                </Property>
+                <Property Name="to_Agency_AgencyID" Type="Edm.String" Nullable="true" MaxLength="6">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <Property Name="to_Customer_CustomerID" Type="Edm.String" Nullable="true" MaxLength="6">
+                    <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                </Property>
+                <NavigationProperty Name="CurrencyCode" Type="TravelService.Currencies" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CurrencyCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Currency}"/>
+                    <ReferentialConstraint Property="CurrencyCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="TravelStatus" Type="TravelService.TravelStatus" Nullable="true">
+                    <ReferentialConstraint Property="TravelStatus_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Agency" Type="TravelService.TravelAgency" Nullable="true">
+                    <ReferentialConstraint Property="to_Agency_AgencyID" ReferencedProperty="AgencyID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Booking" Type="Collection(TravelService.Booking)" Partner="to_Travel">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="to_Customer" Type="TravelService.Passenger" Nullable="true">
+                    <ReferentialConstraint Property="to_Customer_CustomerID" ReferencedProperty="CustomerID"/>
+                </NavigationProperty>
+                <Annotation Term="Security.ReadWriteRoles">
+                    <Collection>
+                        <String>processor</String>
+                        <String>admin</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="Security.ReadRoles">
+                    <Collection>
+                        <String>authenticated-user</String>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="TravelAgency">
+                <Key>
+                    <PropertyRef Name="AgencyID"/>
+                </Key>
+                <Property Name="AgencyID" Type="Edm.String" Nullable="false" MaxLength="6"/>
+                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="40"/>
+                <Property Name="CountryCode_code" Type="Edm.String" Nullable="true" MaxLength="3">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <Annotation Term="Common.ValueList">
+                        <Record>
+                            <PropertyValue Property="Label" String="{i18n&gt;Country}"/>
+                            <PropertyValue Property="CollectionPath" String="Countries"/>
+                            <PropertyValue Property="Parameters">
+                                <Collection>
+                                    <Record Type="Common.ValueListParameterInOut">
+                                        <PropertyValue Property="ValueListProperty" String="code"/>
+                                        <PropertyValue Property="LocalDataProperty" PropertyPath="CountryCode_code"/>
+                                    </Record>
+                                    <Record Type="Common.ValueListParameterDisplayOnly">
+                                        <PropertyValue Property="ValueListProperty" String="name"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </Property>
+                <Property Name="EMailAddress" Type="Edm.String" Nullable="true" MaxLength="256"/>
+                <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="80"/>
+                <Property Name="PhoneNumber" Type="Edm.String" Nullable="true" MaxLength="30"/>
+                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Street" Type="Edm.String" Nullable="true" MaxLength="60"/>
+                <Property Name="WebAddress" Type="Edm.String" Nullable="true" MaxLength="256"/>
+                <NavigationProperty Name="CountryCode" Type="TravelService.Countries" Nullable="true">
+                    <Annotation Term="Core.Description" String="{i18n&gt;CountryCode.Description}"/>
+                    <Annotation Term="Common.Label" String="{i18n&gt;Country}"/>
+                    <ReferentialConstraint Property="CountryCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="TravelStatus">
+                <Annotation Term="Cache.OnDemand" Bool="true"/>
+                <Annotation Term="Cache.ByLocale">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity has a 'localized' element."/>
+                </Annotation>
+                <Annotation Term="Cache.Timeout" Duration="PT1H"/>
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="1">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Open"/>
+                                <PropertyValue Property="Value" String="O"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Accepted"/>
+                                <PropertyValue Property="Value" String="A"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                <PropertyValue Property="Value" String="X"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+                <NavigationProperty Name="texts" Type="Collection(TravelService.TravelStatus_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </EntityType>
+            <EntityType Name="TravelStatus_texts">
+                <Annotation Term="Cache.NoStore">
+                    <Annotation Term="Cache.AutoConfig" String="CDS entity is not directly loadable."/>
+                </Annotation>
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14">
+                    <Annotation Term="Common.Label" String="{i18n&gt;LanguageCode}"/>
+                </Property>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="1">
+                    <Annotation Term="Validation.AllowedValues">
+                        <Collection>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Open"/>
+                                <PropertyValue Property="Value" String="O"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Accepted"/>
+                                <PropertyValue Property="Value" String="A"/>
+                            </Record>
+                            <Record>
+                                <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                <PropertyValue Property="Value" String="X"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                </Property>
+                <Property Name="descr" Type="Edm.String" Nullable="true" MaxLength="1000">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Description}"/>
+                </Property>
+                <Property Name="name" Type="Edm.String" Nullable="true" MaxLength="255">
+                    <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
+                </Property>
+            </EntityType>
+            <Action Name="acceptTravel" IsBound="true">
+                <Parameter Name="in" Type="TravelService.Travel" Nullable="true"/>
+            </Action>
+            <Action Name="createTravelByTemplate" IsBound="true">
+                <Parameter Name="in" Type="TravelService.Travel" Nullable="true"/>
+                <ReturnType Type="TravelService.Travel" Nullable="true"/>
+            </Action>
+            <Action Name="deductDiscount" IsBound="true">
+                <Parameter Name="in" Type="TravelService.Travel" Nullable="true"/>
+                <Parameter Name="percent" Type="Edm.Int32" Nullable="false">
+                    <Annotation Term="Validation.Minimum" Int="1"/>
+                    <Annotation Term="Validation.Maximum" Int="100"/>
+                </Parameter>
+                <ReturnType Type="TravelService.Travel" Nullable="true"/>
+            </Action>
+            <Action Name="rejectTravel" IsBound="true">
+                <Parameter Name="in" Type="TravelService.Travel" Nullable="true"/>
+            </Action>
+            <EntityContainer Name="EntityContainer">
+                <Annotation Term="Cache.ODataBackend" String="sflight_srv"/>
+                <Annotation Term="SQL.CacheDatabase" Bool="true"/>
+                <Annotation Term="SQL.DeltaTriggers" Bool="true"/>
+                <Annotation Term="SQL.TrackChanges" Bool="true"/>
+                <Annotation Term="SQL.TrackDownloads" Bool="true"/>
+                <EntitySet Name="Airline" EntityType="TravelService.Airline">
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="Airport" EntityType="TravelService.Airport">
+                    <NavigationPropertyBinding Path="CountryCode" Target="Countries"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="Booking" EntityType="TravelService.Booking">
+                    <NavigationPropertyBinding Path="BookingStatus" Target="BookingStatus"/>
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="to_BookSupplement" Target="BookingSupplement"/>
+                    <NavigationPropertyBinding Path="to_Carrier" Target="Airline"/>
+                    <NavigationPropertyBinding Path="to_Customer" Target="Passenger"/>
+                    <NavigationPropertyBinding Path="to_Flight" Target="Flight"/>
+                    <NavigationPropertyBinding Path="to_Travel" Target="Travel"/>
+                </EntitySet>
+                <EntitySet Name="BookingStatus" EntityType="TravelService.BookingStatus">
+                    <NavigationPropertyBinding Path="texts" Target="BookingStatus_texts"/>
+                </EntitySet>
+                <EntitySet Name="BookingStatus_texts" EntityType="TravelService.BookingStatus_texts"/>
+                <EntitySet Name="BookingSupplement" EntityType="TravelService.BookingSupplement">
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="to_Booking" Target="Booking"/>
+                    <NavigationPropertyBinding Path="to_Supplement" Target="Supplement"/>
+                    <NavigationPropertyBinding Path="to_Travel" Target="Travel"/>
+                </EntitySet>
+                <EntitySet Name="ClientRegistrationSet" EntityType="TravelService.ClientRegistration"/>
+                <EntitySet Name="Countries" EntityType="TravelService.Countries">
+                    <NavigationPropertyBinding Path="texts" Target="Countries_texts"/>
+                </EntitySet>
+                <EntitySet Name="Countries_texts" EntityType="TravelService.Countries_texts"/>
+                <EntitySet Name="Currencies" EntityType="TravelService.Currencies">
+                    <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+                </EntitySet>
+                <EntitySet Name="Currencies_texts" EntityType="TravelService.Currencies_texts"/>
+                <EntitySet Name="Flight" EntityType="TravelService.Flight">
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="to_Airline" Target="Airline"/>
+                    <NavigationPropertyBinding Path="to_Connection" Target="FlightConnection"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="FlightConnection" EntityType="TravelService.FlightConnection">
+                    <NavigationPropertyBinding Path="DepartureAirport" Target="Airport"/>
+                    <NavigationPropertyBinding Path="DestinationAirport" Target="Airport"/>
+                    <NavigationPropertyBinding Path="to_Airline" Target="Airline"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="Passenger" EntityType="TravelService.Passenger">
+                    <NavigationPropertyBinding Path="CountryCode" Target="Countries"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="Supplement" EntityType="TravelService.Supplement">
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="Type" Target="SupplementType"/>
+                    <NavigationPropertyBinding Path="texts" Target="Supplement_texts"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="SupplementType" EntityType="TravelService.SupplementType">
+                    <NavigationPropertyBinding Path="texts" Target="SupplementType_texts"/>
+                </EntitySet>
+                <EntitySet Name="SupplementType_texts" EntityType="TravelService.SupplementType_texts"/>
+                <EntitySet Name="Supplement_texts" EntityType="TravelService.Supplement_texts"/>
+                <EntitySet Name="Travel" EntityType="TravelService.Travel">
+                    <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="TravelStatus" Target="TravelStatus"/>
+                    <NavigationPropertyBinding Path="to_Agency" Target="TravelAgency"/>
+                    <NavigationPropertyBinding Path="to_Booking" Target="Booking"/>
+                    <NavigationPropertyBinding Path="to_Customer" Target="Passenger"/>
+                    <Annotation Term="Capabilities.FilterRestrictions">
+                        <Record>
+                            <PropertyValue Property="FilterExpressionRestrictions">
+                                <Collection>
+                                    <Record>
+                                        <PropertyValue Property="Property" PropertyPath="BeginDate"/>
+                                        <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                    </Record>
+                                    <Record>
+                                        <PropertyValue Property="Property" PropertyPath="EndDate"/>
+                                        <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="TravelAgency" EntityType="TravelService.TravelAgency">
+                    <NavigationPropertyBinding Path="CountryCode" Target="Countries"/>
+                    <Annotation Term="Capabilities.InsertRestrictions">
+                        <Record>
+                            <PropertyValue Property="Insertable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.UpdateRestrictions">
+                        <Record>
+                            <PropertyValue Property="Updatable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                    <Annotation Term="Capabilities.DeleteRestrictions">
+                        <Record>
+                            <PropertyValue Property="Deletable" Bool="false"/>
+                        </Record>
+                    </Annotation>
+                </EntitySet>
+                <EntitySet Name="TravelStatus" EntityType="TravelService.TravelStatus">
+                    <NavigationPropertyBinding Path="texts" Target="TravelStatus_texts"/>
+                </EntitySet>
+                <EntitySet Name="TravelStatus_texts" EntityType="TravelService.TravelStatus_texts"/>
+            </EntityContainer>
+            <Annotation Term="Core.Links">
+                <Collection>
+                    <Record>
+                        <PropertyValue Property="rel" String="author"/>
+                        <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

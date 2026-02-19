@@ -1,0 +1,25 @@
+{
+    "file_suffixes":
+    {
+        "hdbindex":
+        {
+            "plugin_name": "com.sap.hana.di.index"
+        },
+        "hdbsequence":
+        {
+            "plugin_name": "com.sap.hana.di.sequence"
+        },
+        "hdbtable":
+        {
+            "plugin_name": "com.sap.hana.di.table"
+        },
+        "hdbtrigger":
+        {
+            "plugin_name": "com.sap.hana.di.trigger"
+        },
+        "hdbview":
+        {
+            "plugin_name": "com.sap.hana.di.view"
+        }
+    }
+}

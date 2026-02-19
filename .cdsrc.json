@@ -1,5 +1,10 @@
 {
   "requires": {
-    "cloud-logging": true
+    "db": "hana",
+    "[production]": {
+      "auth": "xsuaa"
+    },
+    "destinations": true,
+    "telemetry": "to-cloud-logging"
   }
 }

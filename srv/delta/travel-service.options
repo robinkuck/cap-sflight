@@ -1,0 +1,21 @@
+# cap.service: sflight-srv
+-jakarta
+-application sflight
+-version 1.0.0
+-package com.sap.cap.sflight.delta
+-path /delta/TravelService
+-sap:cf
+-bind hana:sflight-db
+-dest sflight-destination
+-proxy:cache sflight_srv
+# delegates authorization to cap service through the destination
+# -login http@sflight_srv
+-login NONE
+-cap:embed
+-cap:service
+-schema:cds ../../srv/travel-service.cds
+-hdi:deploy ../../db/src/delta
+-track:changes
+-track:downloads
+-delta:triggers
+-cf:logs
