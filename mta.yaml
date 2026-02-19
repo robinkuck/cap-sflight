@@ -11,7 +11,6 @@ build-parameters:
       commands:
         - npm ci
         - npm run build
-        - ./cds-delta.sh build
 modules:
   - name: sflight-srv
     type: java
