@@ -35,7 +35,7 @@ modules:
         group: destinations
         properties:
           name: sflight_srv
-          url: ~{srv-url}/odata/v4/TravelService
+          url: ~{srv-url}/processor
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter, destinations)
         properties:
@@ -57,9 +57,7 @@ modules:
       - name: sflight-db
       - name: sflight-uaa
     build-parameters:
-      builder: custom
-      commands:
-        - npm run build
+      ignore: ["node_modules/"]
   - name: sflight-appcontent
     type: com.sap.application.content
     path: gen
