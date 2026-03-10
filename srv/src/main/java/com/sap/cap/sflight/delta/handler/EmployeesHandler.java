@@ -24,12 +24,7 @@ public class EmployeesHandler extends com.sap.cloud.server.odata.DefaultEntityHa
     }
 
     @Override public DataValue executeQuery(DataQuery query) {
-        if (query.getTrackChanges()) {
-            return service.executeQuery(query).getResult();
-        }
-        else {
-            return com.sap.cap.sflight.delta.QueryExecutor.executeQuery(backend, query, headersFromQuery(query), null);
-        }
+        return service.executeQuery(query).getResult();
     }
 
     @Override public DataValue loadAll(DataQuery query) {
