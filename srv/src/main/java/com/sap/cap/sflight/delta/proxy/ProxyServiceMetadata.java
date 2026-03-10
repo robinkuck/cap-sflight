@@ -37,6 +37,8 @@ public abstract class ProxyServiceMetadata
 
         public static final com.sap.cloud.server.odata.EntityType currenciesTexts = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Currencies_texts");
 
+        public static final com.sap.cloud.server.odata.EntityType employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Employees");
+
         public static final com.sap.cloud.server.odata.EntityType flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Flight");
 
         public static final com.sap.cloud.server.odata.EntityType flightConnection = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.FlightConnection");
@@ -83,6 +85,8 @@ public abstract class ProxyServiceMetadata
         public static final com.sap.cloud.server.odata.EntitySet currencies = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Currencies");
 
         public static final com.sap.cloud.server.odata.EntitySet currenciesTexts = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Currencies_texts");
+
+        public static final com.sap.cloud.server.odata.EntitySet employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Employees");
 
         public static final com.sap.cloud.server.odata.EntitySet flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Flight");
 

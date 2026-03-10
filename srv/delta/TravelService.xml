@@ -33,6 +33,7 @@
           <NavigationPropertyBinding Path="to_Customer" Target="Passenger"/>
           <NavigationPropertyBinding Path="to_Booking" Target="Booking"/>
         </EntitySet>
+        <EntitySet Name="Employees" EntityType="TravelService.Employees"/>
         <EntitySet Name="Currencies" EntityType="TravelService.Currencies">
           <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
           <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
@@ -140,6 +141,29 @@
         <Property Name="GoGreen" Type="Edm.Boolean" DefaultValue="false"/>
         <Property Name="GreenFee" Type="Edm.Decimal" Precision="16" Scale="3"/>
         <Property Name="TreesPlanted" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Employees">
+        <Key>
+          <PropertyRef Name="EmployeeID"/>
+        </Key>
+        <Property Name="EmployeeID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="LastName" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="FirstName" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="Title" Type="Edm.String" MaxLength="30"/>
+        <Property Name="TitleOfCourtesy" Type="Edm.String" MaxLength="25"/>
+        <Property Name="BirthDate" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="HireDate" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="Address" Type="Edm.String" MaxLength="60"/>
+        <Property Name="City" Type="Edm.String" MaxLength="15"/>
+        <Property Name="Region" Type="Edm.String" MaxLength="15"/>
+        <Property Name="PostalCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="Country" Type="Edm.String" MaxLength="15"/>
+        <Property Name="HomePhone" Type="Edm.String" MaxLength="24"/>
+        <Property Name="Extension" Type="Edm.String" MaxLength="4"/>
+        <Property Name="Photo" Type="Edm.Binary"/>
+        <Property Name="Notes" Type="Edm.String"/>
+        <Property Name="ReportsTo" Type="Edm.Int32"/>
+        <Property Name="PhotoPath" Type="Edm.String" MaxLength="255"/>
       </EntityType>
       <EntityType Name="Currencies">
         <Key>

@@ -5,6 +5,7 @@
       "auth": "xsuaa"
     },
     "destinations": true,
+    "html5-repo": true,
     "telemetry": "to-cloud-logging"
   }
 }

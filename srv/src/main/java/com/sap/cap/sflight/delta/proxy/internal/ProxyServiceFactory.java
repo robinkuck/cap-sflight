@@ -15,6 +15,7 @@ public abstract class ProxyServiceFactory
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.countriesTexts.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCountriesTexts());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currencies.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCurrencies());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCurrenciesTexts());
+        com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateEmployees());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlight());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlightConnection());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.passenger.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreatePassenger());
@@ -179,6 +180,20 @@ public abstract class ProxyServiceFactory
         @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
         {
             return new com.sap.cap.sflight.delta.proxy.CurrenciesTexts(false, indexMap);
+        }
+    }
+
+    public static class CreateEmployees
+    extends com.sap.cloud.server.odata.core.ObjectFactory
+    {
+        @Override public Object create()
+        {
+            return new com.sap.cap.sflight.delta.proxy.Employees(false);
+        }
+
+        @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
+        {
+            return new com.sap.cap.sflight.delta.proxy.Employees(false, indexMap);
         }
     }
 

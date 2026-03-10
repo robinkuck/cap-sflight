@@ -28,6 +28,7 @@ modules:
       OTEL_TRACES_EXPORTER: cloud-logging
       OTEL_LOGS_EXPORTER: none
     requires:
+      - name: sflight-destination-service
       - name: sflight-db
       - name: sflight-uaa
       - name: sflight-cloud-logging
@@ -46,7 +47,7 @@ modules:
     build-parameters:
       builder: custom
       commands:
-        - mvn clean package -DskipTests=true
+        - mvn --settings ./settings.xml clean package -DskipTests=true
       build-result: target/*-exec.jar
   - name: sflight-db-deployer
     type: hdb

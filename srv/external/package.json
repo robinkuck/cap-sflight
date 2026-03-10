@@ -1,0 +1,17 @@
+{
+  "cds": {
+    "requires": {
+      "Northwind": {
+        "[cloud]": {
+          "kind": "odata-v2",
+          "model": "srv/external/Northwind"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/http-client": "^4",
+    "@sap-cloud-sdk/resilience": "^4"
+  }
+}

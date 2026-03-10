@@ -1,0 +1,32 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <!-- Optional: Define credentials for the repository -->
+  <servers>
+    <server>
+      <id>sap-common</id>
+      <username>${env.SAP_REPO_CREDS_user}</username>
+      <password>${env.SAP_REPO_CREDS_password}</password>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>sap-cloud-repo</id>
+      <repositories>
+        <repository>
+          <id>sap-common</id>
+          <url>https://common.repositories.cloud.sap/artifactory/deploy.releases</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>sap-common</id>
+          <url>https://common.repositories.cloud.sap/artifactory/deploy.releases</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>sap-cloud-repo</activeProfile>
+  </activeProfiles>
+</settings>

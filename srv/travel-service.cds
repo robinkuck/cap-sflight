@@ -1,4 +1,5 @@
 using { sap.fe.cap.travel as my } from '../db/schema';
+using { Northwind as external } from './external/Northwind';
 
 service TravelService @(path:'/processor') {
 
@@ -15,6 +16,9 @@ service TravelService @(path:'/processor') {
     action deductDiscount( percent: Percentage not null ) returns Travel;
   };
 
+  @cache.timeout : 'PT5M'
+  entity Employees as projection on external.Employees
+    excluding { Employees1, Employee1, Orders, Territories };
 }
 
 type Percentage : Integer @assert.range: [1,100];
