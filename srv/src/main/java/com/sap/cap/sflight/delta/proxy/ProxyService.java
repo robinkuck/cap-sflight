@@ -25,11 +25,15 @@ public class ProxyService
 
     public static final com.sap.cloud.server.odata.EntitySet currenciesTexts = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Currencies_texts");
 
+    public static final com.sap.cloud.server.odata.EntitySet customers = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Customers");
+
     public static final com.sap.cloud.server.odata.EntitySet employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Employees");
 
     public static final com.sap.cloud.server.odata.EntitySet flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Flight");
 
     public static final com.sap.cloud.server.odata.EntitySet flightConnection = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("FlightConnection");
+
+    public static final com.sap.cloud.server.odata.EntitySet orders = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Orders");
 
     public static final com.sap.cloud.server.odata.EntitySet passenger = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Passenger");
 
@@ -768,6 +772,63 @@ public class ProxyService
         return this.getCurrenciesTexts1(var_query.withKey(com.sap.cap.sflight.delta.proxy.CurrenciesTexts.key(locale, code)), headers, options);
     }
 
+    public com.sap.cap.sflight.delta.proxy.CustomersList getCustomers()
+    {
+        return this.getCustomers(null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.CustomersList getCustomers(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getCustomers(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.CustomersList getCustomers(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getCustomers(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.CustomersList getCustomers(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return com.sap.cap.sflight.delta.proxy.Customers.list(this.executeQuery(var_query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.customers), headers, options).getEntityList());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getCustomers1(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getCustomers1(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        return com.sap.cap.sflight.delta.proxy.internal.Any_as_com_sap_cap_sflight_delta_proxy_Customers.cast(this.executeQuery(query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.customers), headers, options).getRequiredEntity());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1WithKey(final String customerID)
+    {
+        return this.getCustomers1WithKey(customerID, null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1WithKey(final String customerID, final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getCustomers1WithKey(customerID, query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1WithKey(final String customerID, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getCustomers1WithKey(customerID, query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Customers getCustomers1WithKey(final String customerID, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return this.getCustomers1(var_query.withKey(com.sap.cap.sflight.delta.proxy.Customers.key(customerID)), headers, options);
+    }
+
     public com.sap.cap.sflight.delta.proxy.EmployeesList getEmployees()
     {
         return this.getEmployees(null, null, null);
@@ -942,6 +1003,63 @@ public class ProxyService
     @Override public com.sap.cloud.server.odata.MetadataLock getMetadataLock()
     {
         return com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.lock;
+    }
+
+    public com.sap.cap.sflight.delta.proxy.OrdersList getOrders()
+    {
+        return this.getOrders(null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.OrdersList getOrders(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getOrders(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.OrdersList getOrders(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getOrders(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.OrdersList getOrders(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return com.sap.cap.sflight.delta.proxy.Orders.list(this.executeQuery(var_query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.orders), headers, options).getEntityList());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getOrders1(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getOrders1(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        return com.sap.cap.sflight.delta.proxy.internal.Any_as_com_sap_cap_sflight_delta_proxy_Orders.cast(this.executeQuery(query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.orders), headers, options).getRequiredEntity());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1WithKey(final int orderID)
+    {
+        return this.getOrders1WithKey(orderID, null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1WithKey(final int orderID, final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getOrders1WithKey(orderID, query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1WithKey(final int orderID, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getOrders1WithKey(orderID, query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Orders getOrders1WithKey(final int orderID, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return this.getOrders1(var_query.withKey(com.sap.cap.sflight.delta.proxy.Orders.key(orderID)), headers, options);
     }
 
     public com.sap.cap.sflight.delta.proxy.PassengerList getPassenger()

@@ -17,9 +17,11 @@ public class RegisterHandlers {
     public static EntityHandler handler_Countries_texts;
     public static EntityHandler handler_Currencies;
     public static EntityHandler handler_Currencies_texts;
+    public static EntityHandler handler_Customers;
     public static EntityHandler handler_Employees;
     public static EntityHandler handler_Flight;
     public static EntityHandler handler_FlightConnection;
+    public static EntityHandler handler_Orders;
     public static EntityHandler handler_Passenger;
     public static EntityHandler handler_Supplement;
     public static EntityHandler handler_SupplementType;
@@ -43,9 +45,11 @@ public class RegisterHandlers {
         handler_Countries_texts = new com.sap.cap.sflight.delta.handler.CountriesTextsHandler(servlet, service);
         handler_Currencies = new com.sap.cap.sflight.delta.handler.CurrenciesHandler(servlet, service);
         handler_Currencies_texts = new com.sap.cap.sflight.delta.handler.CurrenciesTextsHandler(servlet, service);
+        handler_Customers = new com.sap.cap.sflight.delta.handler.CustomersHandler(servlet, service);
         handler_Employees = new com.sap.cap.sflight.delta.handler.EmployeesHandler(servlet, service);
         handler_Flight = new com.sap.cap.sflight.delta.handler.FlightHandler(servlet, service);
         handler_FlightConnection = new com.sap.cap.sflight.delta.handler.FlightConnectionHandler(servlet, service);
+        handler_Orders = new com.sap.cap.sflight.delta.handler.OrdersHandler(servlet, service);
         handler_Passenger = new com.sap.cap.sflight.delta.handler.PassengerHandler(servlet, service);
         handler_Supplement = new com.sap.cap.sflight.delta.handler.SupplementHandler(servlet, service);
         handler_SupplementType = new com.sap.cap.sflight.delta.handler.SupplementTypeHandler(servlet, service);
@@ -66,9 +70,11 @@ public class RegisterHandlers {
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.countriesTexts, handler_Countries_texts);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currencies, handler_Currencies);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts, handler_Currencies_texts);
+        servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.customers, handler_Customers);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees, handler_Employees);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight, handler_Flight);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection, handler_FlightConnection);
+        servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.orders, handler_Orders);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.passenger, handler_Passenger);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.supplement, handler_Supplement);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.supplementType, handler_SupplementType);
@@ -86,5 +92,8 @@ public class RegisterHandlers {
 
     public static void startRefresh(com.sap.cap.sflight.delta.MainServlet servlet) {
         servlet.createRefreshSemaphores();
+        servlet.startCacheRefreshThread(handler_Customers, com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.customers, servlet.shutdown);
+        servlet.startCacheRefreshThread(handler_Employees, com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.employees, servlet.shutdown);
+        servlet.startCacheRefreshThread(handler_Orders, com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.orders, servlet.shutdown);
     }
 }

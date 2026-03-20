@@ -15,9 +15,11 @@ public abstract class ProxyServiceFactory
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.countriesTexts.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCountriesTexts());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currencies.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCurrencies());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCurrenciesTexts());
+        com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.customers.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCustomers());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateEmployees());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlight());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlightConnection());
+        com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.orders.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateOrders());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.passenger.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreatePassenger());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.supplement.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateSupplement());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.supplementType.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateSupplementType());
@@ -183,6 +185,20 @@ public abstract class ProxyServiceFactory
         }
     }
 
+    public static class CreateCustomers
+    extends com.sap.cloud.server.odata.core.ObjectFactory
+    {
+        @Override public Object create()
+        {
+            return new com.sap.cap.sflight.delta.proxy.Customers(false);
+        }
+
+        @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
+        {
+            return new com.sap.cap.sflight.delta.proxy.Customers(false, indexMap);
+        }
+    }
+
     public static class CreateEmployees
     extends com.sap.cloud.server.odata.core.ObjectFactory
     {
@@ -222,6 +238,20 @@ public abstract class ProxyServiceFactory
         @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
         {
             return new com.sap.cap.sflight.delta.proxy.FlightConnection(false, indexMap);
+        }
+    }
+
+    public static class CreateOrders
+    extends com.sap.cloud.server.odata.core.ObjectFactory
+    {
+        @Override public Object create()
+        {
+            return new com.sap.cap.sflight.delta.proxy.Orders(false);
+        }
+
+        @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
+        {
+            return new com.sap.cap.sflight.delta.proxy.Orders(false, indexMap);
         }
     }
 

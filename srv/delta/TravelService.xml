@@ -34,6 +34,8 @@
           <NavigationPropertyBinding Path="to_Booking" Target="Booking"/>
         </EntitySet>
         <EntitySet Name="Employees" EntityType="TravelService.Employees"/>
+        <EntitySet Name="Customers" EntityType="TravelService.Customers"/>
+        <EntitySet Name="Orders" EntityType="TravelService.Orders"/>
         <EntitySet Name="Currencies" EntityType="TravelService.Currencies">
           <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
           <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
@@ -147,23 +149,57 @@
           <PropertyRef Name="EmployeeID"/>
         </Key>
         <Property Name="EmployeeID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="LastName" Type="Edm.String" MaxLength="20" Nullable="false"/>
-        <Property Name="FirstName" Type="Edm.String" MaxLength="10" Nullable="false"/>
-        <Property Name="Title" Type="Edm.String" MaxLength="30"/>
-        <Property Name="TitleOfCourtesy" Type="Edm.String" MaxLength="25"/>
-        <Property Name="BirthDate" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="HireDate" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="Address" Type="Edm.String" MaxLength="60"/>
-        <Property Name="City" Type="Edm.String" MaxLength="15"/>
-        <Property Name="Region" Type="Edm.String" MaxLength="15"/>
-        <Property Name="PostalCode" Type="Edm.String" MaxLength="10"/>
-        <Property Name="Country" Type="Edm.String" MaxLength="15"/>
-        <Property Name="HomePhone" Type="Edm.String" MaxLength="24"/>
-        <Property Name="Extension" Type="Edm.String" MaxLength="4"/>
-        <Property Name="Photo" Type="Edm.Binary"/>
+        <Property Name="LastName" Type="Edm.String"/>
+        <Property Name="FirstName" Type="Edm.String"/>
+        <Property Name="Title" Type="Edm.String"/>
+        <Property Name="TitleOfCourtesy" Type="Edm.String"/>
+        <Property Name="BirthDate" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="HireDate" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="Address" Type="Edm.String"/>
+        <Property Name="City" Type="Edm.String"/>
+        <Property Name="Region" Type="Edm.String"/>
+        <Property Name="PostalCode" Type="Edm.String"/>
+        <Property Name="Country" Type="Edm.String"/>
+        <Property Name="HomePhone" Type="Edm.String"/>
+        <Property Name="Extension" Type="Edm.String"/>
         <Property Name="Notes" Type="Edm.String"/>
         <Property Name="ReportsTo" Type="Edm.Int32"/>
-        <Property Name="PhotoPath" Type="Edm.String" MaxLength="255"/>
+        <Property Name="PhotoPath" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Customers">
+        <Key>
+          <PropertyRef Name="CustomerID"/>
+        </Key>
+        <Property Name="CustomerID" Type="Edm.String" Nullable="false"/>
+        <Property Name="CompanyName" Type="Edm.String"/>
+        <Property Name="ContactName" Type="Edm.String"/>
+        <Property Name="ContactTitle" Type="Edm.String"/>
+        <Property Name="Address" Type="Edm.String"/>
+        <Property Name="City" Type="Edm.String"/>
+        <Property Name="Region" Type="Edm.String"/>
+        <Property Name="PostalCode" Type="Edm.String"/>
+        <Property Name="Country" Type="Edm.String"/>
+        <Property Name="Phone" Type="Edm.String"/>
+        <Property Name="Fax" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Orders">
+        <Key>
+          <PropertyRef Name="OrderID"/>
+        </Key>
+        <Property Name="OrderID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="CustomerID" Type="Edm.String"/>
+        <Property Name="EmployeeID" Type="Edm.Int32"/>
+        <Property Name="OrderDate" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="RequiredDate" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="ShippedDate" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="ShipVia" Type="Edm.Int32"/>
+        <Property Name="Freight" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="ShipName" Type="Edm.String"/>
+        <Property Name="ShipAddress" Type="Edm.String"/>
+        <Property Name="ShipCity" Type="Edm.String"/>
+        <Property Name="ShipRegion" Type="Edm.String"/>
+        <Property Name="ShipPostalCode" Type="Edm.String"/>
+        <Property Name="ShipCountry" Type="Edm.String"/>
       </EntityType>
       <EntityType Name="Currencies">
         <Key>

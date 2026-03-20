@@ -28,15 +28,10 @@ modules:
       OTEL_TRACES_EXPORTER: cloud-logging
       OTEL_LOGS_EXPORTER: none
     requires:
-      - name: sflight-destination-service
+      - name: sflight-destination
       - name: sflight-db
       - name: sflight-uaa
       - name: sflight-cloud-logging
-      - name: srv-api
-        group: destinations
-        properties:
-          name: sflight_srv
-          url: ~{srv-url}/processor
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter, destinations)
         properties:
@@ -63,7 +58,7 @@ modules:
     type: com.sap.application.content
     path: gen
     requires:
-      - name: sflight-destination-service
+      - name: sflight-destination
       - name: sflight-html5-repo-host
         parameters:
           content-target: true
@@ -111,7 +106,7 @@ modules:
         parameters:
           service-key:
             name: sflight-html5-repo-host-key
-      - name: sflight-destination-service
+      - name: sflight-destination
         parameters:
           content-target: true
     parameters:
@@ -167,7 +162,7 @@ resources:
     parameters:
       service: html5-apps-repo
       service-plan: app-host
-  - name: sflight-destination-service
+  - name: sflight-destination
     type: org.cloudfoundry.managed-service
     requires:
       - name: srv-api

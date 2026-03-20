@@ -25,8 +25,6 @@ public class Employees
 
     public static final com.sap.cloud.server.odata.Property notes = com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.getProperty("Notes");
 
-    public static final com.sap.cloud.server.odata.Property photo = com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.getProperty("Photo");
-
     public static final com.sap.cloud.server.odata.Property photoPath = com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.getProperty("PhotoPath");
 
     public static final com.sap.cloud.server.odata.Property postalCode = com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.getProperty("PostalCode");
@@ -91,7 +89,7 @@ public class Employees
 
     public String getFirstName()
     {
-        return com.sap.cloud.server.odata.StringValue.unwrap(this.getDataValue(com.sap.cap.sflight.delta.proxy.Employees.firstName));
+        return com.sap.cloud.server.odata.StringValue.toNullable(this.getDataValue(com.sap.cap.sflight.delta.proxy.Employees.firstName));
     }
 
     public com.sap.cloud.server.odata.GlobalDateTime getHireDate()
@@ -106,7 +104,7 @@ public class Employees
 
     public String getLastName()
     {
-        return com.sap.cloud.server.odata.StringValue.unwrap(this.getDataValue(com.sap.cap.sflight.delta.proxy.Employees.lastName));
+        return com.sap.cloud.server.odata.StringValue.toNullable(this.getDataValue(com.sap.cap.sflight.delta.proxy.Employees.lastName));
     }
 
     public String getNotes()
@@ -117,11 +115,6 @@ public class Employees
     public com.sap.cap.sflight.delta.proxy.Employees getOld()
     {
         return com.sap.cap.sflight.delta.proxy.internal.Any_as_com_sap_cap_sflight_delta_proxy_Employees.cast(this.getOldEntity());
-    }
-
-    public byte[] getPhoto()
-    {
-        return com.sap.cloud.server.odata.BinaryValue.toNullable(this.getDataValue(com.sap.cap.sflight.delta.proxy.Employees.photo));
     }
 
     public String getPhotoPath()
@@ -201,7 +194,7 @@ public class Employees
 
     public void setFirstName(final String value)
     {
-        this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.firstName, com.sap.cloud.server.odata.StringValue.of(value));
+        this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.firstName, com.sap.cloud.server.odata.StringValue.ofNullable(value));
     }
 
     public void setHireDate(final com.sap.cloud.server.odata.GlobalDateTime value)
@@ -216,17 +209,12 @@ public class Employees
 
     public void setLastName(final String value)
     {
-        this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.lastName, com.sap.cloud.server.odata.StringValue.of(value));
+        this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.lastName, com.sap.cloud.server.odata.StringValue.ofNullable(value));
     }
 
     public void setNotes(final String value)
     {
         this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.notes, com.sap.cloud.server.odata.StringValue.ofNullable(value));
-    }
-
-    public void setPhoto(final byte[] value)
-    {
-        this.setDataValue(com.sap.cap.sflight.delta.proxy.Employees.photo, com.sap.cloud.server.odata.BinaryValue.ofNullable(value));
     }
 
     public void setPhotoPath(final String value)

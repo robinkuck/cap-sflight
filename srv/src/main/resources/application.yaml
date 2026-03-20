@@ -27,11 +27,14 @@ cds:
   remote:
     services:
       Northwind:
+        http:
+          suffix: "/V4/Northwind/"
+          service: "Northwind.svc"
         destination:
-          name: Northwind
+          properties:
+            url: "https://services.odata.org"
         model: Northwind
-        type: odata-v2
-
+        type: odata-v4
 ---
 spring:
   config:

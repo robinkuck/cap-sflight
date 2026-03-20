@@ -468,28 +468,43 @@
                     <Annotation Term="Common.Label" String="{i18n&gt;Name}"/>
                 </Property>
             </EntityType>
+            <EntityType Name="Customers">
+                <Key>
+                    <PropertyRef Name="CustomerID"/>
+                </Key>
+                <Property Name="CustomerID" Type="Edm.String" Nullable="false"/>
+                <Property Name="Address" Type="Edm.String" Nullable="true"/>
+                <Property Name="City" Type="Edm.String" Nullable="true"/>
+                <Property Name="CompanyName" Type="Edm.String" Nullable="true"/>
+                <Property Name="ContactName" Type="Edm.String" Nullable="true"/>
+                <Property Name="ContactTitle" Type="Edm.String" Nullable="true"/>
+                <Property Name="Country" Type="Edm.String" Nullable="true"/>
+                <Property Name="Fax" Type="Edm.String" Nullable="true"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="true"/>
+                <Property Name="PostalCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="Region" Type="Edm.String" Nullable="true"/>
+            </EntityType>
             <EntityType Name="Employees">
                 <Key>
                     <PropertyRef Name="EmployeeID"/>
                 </Key>
                 <Property Name="EmployeeID" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="Address" Type="Edm.String" Nullable="true" MaxLength="60"/>
-                <Property Name="BirthDate" Type="Edm.DateTimeOffset" Nullable="true" Precision="7"/>
-                <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="15"/>
-                <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="15"/>
-                <Property Name="Extension" Type="Edm.String" Nullable="true" MaxLength="4"/>
-                <Property Name="FirstName" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="HireDate" Type="Edm.DateTimeOffset" Nullable="true" Precision="7"/>
-                <Property Name="HomePhone" Type="Edm.String" Nullable="true" MaxLength="24"/>
-                <Property Name="LastName" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Address" Type="Edm.String" Nullable="true"/>
+                <Property Name="BirthDate" Type="Edm.DateTimeOffset" Nullable="true"/>
+                <Property Name="City" Type="Edm.String" Nullable="true"/>
+                <Property Name="Country" Type="Edm.String" Nullable="true"/>
+                <Property Name="Extension" Type="Edm.String" Nullable="true"/>
+                <Property Name="FirstName" Type="Edm.String" Nullable="true"/>
+                <Property Name="HireDate" Type="Edm.DateTimeOffset" Nullable="true"/>
+                <Property Name="HomePhone" Type="Edm.String" Nullable="true"/>
+                <Property Name="LastName" Type="Edm.String" Nullable="true"/>
                 <Property Name="Notes" Type="Edm.String" Nullable="true"/>
-                <Property Name="Photo" Type="Edm.Binary" Nullable="true"/>
-                <Property Name="PhotoPath" Type="Edm.String" Nullable="true" MaxLength="255"/>
-                <Property Name="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10"/>
-                <Property Name="Region" Type="Edm.String" Nullable="true" MaxLength="15"/>
+                <Property Name="PhotoPath" Type="Edm.String" Nullable="true"/>
+                <Property Name="PostalCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="Region" Type="Edm.String" Nullable="true"/>
                 <Property Name="ReportsTo" Type="Edm.Int32" Nullable="true"/>
-                <Property Name="Title" Type="Edm.String" Nullable="true" MaxLength="30"/>
-                <Property Name="TitleOfCourtesy" Type="Edm.String" Nullable="true" MaxLength="25"/>
+                <Property Name="Title" Type="Edm.String" Nullable="true"/>
+                <Property Name="TitleOfCourtesy" Type="Edm.String" Nullable="true"/>
             </EntityType>
             <EntityType Name="Flight">
                 <Key>
@@ -560,6 +575,25 @@
                 <NavigationProperty Name="to_Airline" Type="TravelService.Airline" Nullable="true">
                     <ReferentialConstraint Property="AirlineID" ReferencedProperty="AirlineID"/>
                 </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Orders">
+                <Key>
+                    <PropertyRef Name="OrderID"/>
+                </Key>
+                <Property Name="OrderID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="CustomerID" Type="Edm.String" Nullable="true"/>
+                <Property Name="EmployeeID" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Freight" Type="Edm.Decimal" Nullable="true" Scale="variable"/>
+                <Property Name="OrderDate" Type="Edm.DateTimeOffset" Nullable="true"/>
+                <Property Name="RequiredDate" Type="Edm.DateTimeOffset" Nullable="true"/>
+                <Property Name="ShipAddress" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipCity" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipCountry" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipName" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipPostalCode" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipRegion" Type="Edm.String" Nullable="true"/>
+                <Property Name="ShipVia" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ShippedDate" Type="Edm.DateTimeOffset" Nullable="true"/>
             </EntityType>
             <EntityType Name="Passenger">
                 <Key>
@@ -1122,6 +1156,7 @@
                     <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
                 </EntitySet>
                 <EntitySet Name="Currencies_texts" EntityType="TravelService.Currencies_texts"/>
+                <EntitySet Name="Customers" EntityType="TravelService.Customers"/>
                 <EntitySet Name="Employees" EntityType="TravelService.Employees"/>
                 <EntitySet Name="Flight" EntityType="TravelService.Flight">
                     <NavigationPropertyBinding Path="CurrencyCode" Target="Currencies"/>
@@ -1163,6 +1198,7 @@
                         </Record>
                     </Annotation>
                 </EntitySet>
+                <EntitySet Name="Orders" EntityType="TravelService.Orders"/>
                 <EntitySet Name="Passenger" EntityType="TravelService.Passenger">
                     <NavigationPropertyBinding Path="CountryCode" Target="Countries"/>
                     <Annotation Term="Capabilities.InsertRestrictions">
