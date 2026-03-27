@@ -43,6 +43,7 @@ modules:
       builder: custom
       commands:
         - mvn --settings ../settings.xml clean package -DskipTests=true
+        # - mvn clean package -DskipTests=true
       build-result: target/*-exec.jar
   - name: sflight-db-deployer
     type: hdb
