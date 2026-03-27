@@ -3,7 +3,8 @@ _out
 *.db
 connection.properties
 default-*.json
-*.sql
+# *.sql
+*h2.sql
 gen/
 node_modules/
 target/
