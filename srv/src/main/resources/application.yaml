@@ -26,19 +26,21 @@ cds:
       path: "/"
   remote:
     services:
-      - name: API_EQUIPMENT
+      "[API_EQUIPMENT]":
+        model: "API_EQUIPMENT"
         destination:
           name: "MIT_S4"
-        type: odata-v2
+        type: "odata-v2"
         http:
           suffix: "/sap/opu/odata/sap"
-      - name: Northwind
-        destination:
-          properties:
-            url: "https://services.odata.org"
+      Northwind:
         http:
           suffix: "/V4/Northwind/"
           service: "Northwind.svc"
+        destination:
+          properties:
+            url: "https://services.odata.org"
+        model: Northwind
         type: odata-v4
 ---
 spring:
