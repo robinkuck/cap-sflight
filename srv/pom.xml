@@ -91,17 +91,6 @@
             <artifactId>cds-feature-enterprise-messaging</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- Cloud SDK -->
-		<dependency>
-			<groupId>com.sap.cloud.sdk</groupId>
-			<artifactId>sdk-core</artifactId>
-		</dependency>
-        <!--
-		<dependency>
-    		<groupId>com.sap.cloud.sdk.cloudplatform</groupId>
-    		<artifactId>connectivity-destination-service</artifactId>
-		</dependency>
-        -->
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
