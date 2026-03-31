@@ -29,7 +29,6 @@ cds:
       - name: API_EQUIPMENT
         destination:
           name: "MIT_S4"
-          retrievalStrategy: "AlwaysProvider"
         type: odata-v2
         http:
           suffix: "/sap/opu/odata/sap"
