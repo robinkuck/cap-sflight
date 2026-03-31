@@ -33,6 +33,7 @@
           <NavigationPropertyBinding Path="to_Customer" Target="Passenger"/>
           <NavigationPropertyBinding Path="to_Booking" Target="Booking"/>
         </EntitySet>
+        <EntitySet Name="Equipment" EntityType="TravelService.Equipment"/>
         <EntitySet Name="Employees" EntityType="TravelService.Employees"/>
         <EntitySet Name="Customers" EntityType="TravelService.Customers"/>
         <EntitySet Name="Orders" EntityType="TravelService.Orders"/>
@@ -143,6 +144,112 @@
         <Property Name="GoGreen" Type="Edm.Boolean" DefaultValue="false"/>
         <Property Name="GreenFee" Type="Edm.Decimal" Precision="16" Scale="3"/>
         <Property Name="TreesPlanted" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Equipment">
+        <Key>
+          <PropertyRef Name="Equipment"/>
+          <PropertyRef Name="ValidityEndDate"/>
+        </Key>
+        <Property Name="Equipment" Type="Edm.String" MaxLength="18" Nullable="false"/>
+        <Property Name="ValidityEndDate" Type="Edm.Date" Nullable="false"/>
+        <Property Name="ValidityEndTime" Type="Edm.TimeOfDay"/>
+        <Property Name="EquipmentValidityEndDateTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="ValidityStartDate" Type="Edm.Date"/>
+        <Property Name="EquipmentOID" Type="Edm.String" MaxLength="128"/>
+        <Property Name="EquipmentName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="EquipmentCategory" Type="Edm.String" MaxLength="1"/>
+        <Property Name="TechnicalObjectType" Type="Edm.String" MaxLength="10"/>
+        <Property Name="AuthorizationGroup" Type="Edm.String" MaxLength="4"/>
+        <Property Name="GrossWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="GrossWeightUnit" Type="Edm.String" MaxLength="3"/>
+        <Property Name="SizeOrDimensionText" Type="Edm.String" MaxLength="18"/>
+        <Property Name="InventoryNumber" Type="Edm.String" MaxLength="25"/>
+        <Property Name="OperationStartDate" Type="Edm.Date"/>
+        <Property Name="AcquisitionValue" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="Currency" Type="Edm.String" MaxLength="5"/>
+        <Property Name="AcquisitionDate" Type="Edm.Date"/>
+        <Property Name="MaintenancePlan" Type="Edm.String" MaxLength="12"/>
+        <Property Name="MeasuringPoint" Type="Edm.String" MaxLength="12"/>
+        <Property Name="AssetManufacturerName" Type="Edm.String" MaxLength="30"/>
+        <Property Name="ManufacturerPartTypeName" Type="Edm.String" MaxLength="20"/>
+        <Property Name="ManufacturerCountry" Type="Edm.String" MaxLength="3"/>
+        <Property Name="ConstructionYear" Type="Edm.String" MaxLength="4"/>
+        <Property Name="ConstructionMonth" Type="Edm.String" MaxLength="2"/>
+        <Property Name="ManufacturerPartNmbr" Type="Edm.String" MaxLength="30"/>
+        <Property Name="ManufacturerSerialNumber" Type="Edm.String" MaxLength="30"/>
+        <Property Name="EquipmentEndOfUseDate" Type="Edm.Date"/>
+        <Property Name="MaintenancePlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="AssetLocation" Type="Edm.String" MaxLength="10"/>
+        <Property Name="AssetRoom" Type="Edm.String" MaxLength="8"/>
+        <Property Name="PlantSection" Type="Edm.String" MaxLength="3"/>
+        <Property Name="WorkCenter" Type="Edm.String" MaxLength="8"/>
+        <Property Name="WorkCenterInternalID" Type="Edm.String" MaxLength="8"/>
+        <Property Name="WorkCenterPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="ABCIndicator" Type="Edm.String" MaxLength="1"/>
+        <Property Name="MaintObjectFreeDefinedAttrib" Type="Edm.String" MaxLength="30"/>
+        <Property Name="FormOfAddress" Type="Edm.String" MaxLength="4"/>
+        <Property Name="BusinessPartnerName1" Type="Edm.String" MaxLength="40"/>
+        <Property Name="BusinessPartnerName2" Type="Edm.String" MaxLength="40"/>
+        <Property Name="CityName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="HouseNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="HouseNumberSupplementText" Type="Edm.String" MaxLength="10"/>
+        <Property Name="Building" Type="Edm.String" MaxLength="20"/>
+        <Property Name="Floor" Type="Edm.String" MaxLength="10"/>
+        <Property Name="RoomNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="PostalCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="StreetName" Type="Edm.String" MaxLength="60"/>
+        <Property Name="Region" Type="Edm.String" MaxLength="3"/>
+        <Property Name="Country" Type="Edm.String" MaxLength="3"/>
+        <Property Name="PhoneNumber" Type="Edm.String" MaxLength="30"/>
+        <Property Name="FaxNumber" Type="Edm.String" MaxLength="30"/>
+        <Property Name="CompanyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="BusinessArea" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MasterFixedAsset" Type="Edm.String" MaxLength="12"/>
+        <Property Name="FixedAsset" Type="Edm.String" MaxLength="4"/>
+        <Property Name="CostCenter" Type="Edm.String" MaxLength="10"/>
+        <Property Name="ControllingArea" Type="Edm.String" MaxLength="4"/>
+        <Property Name="WBSElementExternalID" Type="Edm.String" MaxLength="24"/>
+        <Property Name="SettlementOrder" Type="Edm.String" MaxLength="12"/>
+        <Property Name="MaintenancePlanningPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="MaintenancePlannerGroup" Type="Edm.String" MaxLength="3"/>
+        <Property Name="MainWorkCenter" Type="Edm.String" MaxLength="8"/>
+        <Property Name="MainWorkCenterInternalID" Type="Edm.String" MaxLength="8"/>
+        <Property Name="MainWorkCenterPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="CatalogProfile" Type="Edm.String" MaxLength="9"/>
+        <Property Name="FunctionalLocation" Type="Edm.String" MaxLength="30"/>
+        <Property Name="FunctionalLocationLabelName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="FunctionalLocationName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="EquipInstallationPositionNmbr" Type="Edm.String" MaxLength="4"/>
+        <Property Name="SuperordinateEquipment" Type="Edm.String" MaxLength="18"/>
+        <Property Name="TechnicalObjectSortCode" Type="Edm.String" MaxLength="25"/>
+        <Property Name="ConstructionMaterial" Type="Edm.String" MaxLength="40"/>
+        <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+        <Property Name="SerialNumber" Type="Edm.String" MaxLength="18"/>
+        <Property Name="UniqueItemIdentifier" Type="Edm.String" MaxLength="72"/>
+        <Property Name="UniqueItemIdentifierStrucType" Type="Edm.String" MaxLength="10"/>
+        <Property Name="UniqueItemIdentifierRespPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="SalesOrganization" Type="Edm.String" MaxLength="4"/>
+        <Property Name="DistributionChannel" Type="Edm.String" MaxLength="2"/>
+        <Property Name="OrganizationDivision" Type="Edm.String" MaxLength="2"/>
+        <Property Name="SalesGroup" Type="Edm.String" MaxLength="3"/>
+        <Property Name="SalesOffice" Type="Edm.String" MaxLength="4"/>
+        <Property Name="CreationDate" Type="Edm.Date"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="12"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="12"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="NextEquipUsagePeriodSqncNmbr" Type="Edm.String" MaxLength="3"/>
+        <Property Name="MaintObjectLocAcctAssgmtNmbr" Type="Edm.String" MaxLength="12"/>
+        <Property Name="MaintObjectInternalID" Type="Edm.String" MaxLength="22"/>
+        <Property Name="EquipUsagePeriodSequenceNumber" Type="Edm.String" MaxLength="3"/>
+        <Property Name="EquipmentIsAtCustomer" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsAvailable" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsInWarehouse" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsAssignedToDelivery" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsMarkedForDeletion" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsInstalled" Type="Edm.Boolean"/>
+        <Property Name="EquipIsAllocToSuperiorEquip" Type="Edm.Boolean"/>
+        <Property Name="EquipmentIsInactive" Type="Edm.Boolean"/>
+        <Property Name="EquipHasSubOrdinateEquipment" Type="Edm.String" MaxLength="1"/>
       </EntityType>
       <EntityType Name="Employees">
         <Key>

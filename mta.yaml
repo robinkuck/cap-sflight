@@ -32,6 +32,7 @@ modules:
       - name: sflight-db
       - name: sflight-uaa
       - name: sflight-cloud-logging
+      - name: sflight-eventmesh
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter, destinations)
         properties:
@@ -192,3 +193,8 @@ resources:
       config:
         ingest_otlp:
           enabled: true
+  - name: sflight-eventmesh
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: enterprise-messaging
+      service-plan: default

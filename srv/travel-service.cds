@@ -1,5 +1,6 @@
 using { sap.fe.cap.travel as my } from '../db/schema';
 using { Northwind as external } from './external/Northwind';
+using { sap.cache.equipment as equipment } from '../db/equipment';
 
 service TravelService @(path:'/processor') {
 
@@ -15,6 +16,8 @@ service TravelService @(path:'/processor') {
     action acceptTravel();
     action deductDiscount( percent: Percentage not null ) returns Travel;
   };
+
+  entity Equipment as projection on equipment.Equipment;
   @cache.background
   @cache.timeout : 'PT5M'
   entity Employees as projection on external.Employees

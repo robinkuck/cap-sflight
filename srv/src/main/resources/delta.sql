@@ -377,6 +377,15 @@ create column table sap_fe_cap_travel_BookingSupplement_tracking
     primary key (BookSupplUUID)
 );
 
+create column table sap_cache_equipment_Equipment_tracking
+(
+    Equipment NVARCHAR(18) not null,
+    ValidityEndDate DATE not null,
+    last_modified timestamp not null,
+    is_deleted boolean not null,
+    primary key (Equipment, ValidityEndDate)
+);
+
 create column table sap_fe_cap_travel_Flight_tracking
 (
     AirlineID NVARCHAR(3) not null,
@@ -530,6 +539,33 @@ create trigger sap_fe_cap_travel_BookingSupplement_delete_tracking
 begin
     upsert sap_fe_cap_travel_BookingSupplement_tracking (BookSupplUUID, last_modified, is_deleted)
         values (:oldrow.BookSupplUUID, current_utctimestamp, true) with primary key;
+end;
+
+create trigger sap_cache_equipment_Equipment_insert_tracking
+    after insert on sap_cache_equipment_Equipment
+    referencing new row newrow
+    for each row
+begin
+    upsert sap_cache_equipment_Equipment_tracking (Equipment, ValidityEndDate, last_modified, is_deleted)
+        values (:newrow.Equipment, :newrow.ValidityEndDate, current_utctimestamp, false) with primary key;
+end;
+
+create trigger sap_cache_equipment_Equipment_update_tracking
+    after update on sap_cache_equipment_Equipment
+    referencing new row newrow, old row oldrow
+    for each row
+begin
+    upsert sap_cache_equipment_Equipment_tracking (Equipment, ValidityEndDate, last_modified, is_deleted)
+        values (:newrow.Equipment, :newrow.ValidityEndDate, current_utctimestamp, false) with primary key;
+end;
+
+create trigger sap_cache_equipment_Equipment_delete_tracking
+    after delete on sap_cache_equipment_Equipment
+    referencing old row oldrow
+    for each row
+begin
+    upsert sap_cache_equipment_Equipment_tracking (Equipment, ValidityEndDate, last_modified, is_deleted)
+        values (:oldrow.Equipment, :oldrow.ValidityEndDate, current_utctimestamp, true) with primary key;
 end;
 
 create trigger sap_fe_cap_travel_Flight_insert_tracking
@@ -733,6 +769,113 @@ select
 from sap_fe_cap_travel_BookingSupplement_tracking t
     left outer join TravelService_BookingSupplement d on d.BookSupplUUID = t.BookSupplUUID;
 
+create view TravelService_Equipment_delta as
+select
+    t.Equipment,
+    t.ValidityEndDate,
+    d.ABCIndicator,
+    d.AcquisitionDate,
+    d.AcquisitionValue,
+    d.AssetLocation,
+    d.AssetManufacturerName,
+    d.AssetRoom,
+    d.AuthorizationGroup,
+    d.Building,
+    d.BusinessArea,
+    d.BusinessPartnerName1,
+    d.BusinessPartnerName2,
+    d.CatalogProfile,
+    d.CityName,
+    d.CompanyCode,
+    d.ConstructionMaterial,
+    d.ConstructionMonth,
+    d.ConstructionYear,
+    d.ControllingArea,
+    d.CostCenter,
+    d.Country,
+    d.CreatedByUser,
+    d.CreationDate,
+    d.Currency,
+    d.DistributionChannel,
+    d.EquipHasSubOrdinateEquipment,
+    d.EquipInstallationPositionNmbr,
+    d.EquipIsAllocToSuperiorEquip,
+    d.EquipUsagePeriodSequenceNumber,
+    d.EquipmentCategory,
+    d.EquipmentEndOfUseDate,
+    d.EquipmentIsAssignedToDelivery,
+    d.EquipmentIsAtCustomer,
+    d.EquipmentIsAvailable,
+    d.EquipmentIsInWarehouse,
+    d.EquipmentIsInactive,
+    d.EquipmentIsInstalled,
+    d.EquipmentIsMarkedForDeletion,
+    d.EquipmentName,
+    d.EquipmentOID,
+    d.EquipmentValidityEndDateTime,
+    d.FaxNumber,
+    d.FixedAsset,
+    d.Floor,
+    d.FormOfAddress,
+    d.FunctionalLocation,
+    d.FunctionalLocationLabelName,
+    d.FunctionalLocationName,
+    d.GrossWeight,
+    d.GrossWeightUnit,
+    d.HouseNumber,
+    d.HouseNumberSupplementText,
+    d.InventoryNumber,
+    d.LastChangeDateTime,
+    d.LastChangedByUser,
+    d.MainWorkCenter,
+    d.MainWorkCenterInternalID,
+    d.MainWorkCenterPlant,
+    d.MaintObjectFreeDefinedAttrib,
+    d.MaintObjectInternalID,
+    d.MaintObjectLocAcctAssgmtNmbr,
+    d.MaintenancePlan,
+    d.MaintenancePlannerGroup,
+    d.MaintenancePlanningPlant,
+    d.MaintenancePlant,
+    d.ManufacturerCountry,
+    d.ManufacturerPartNmbr,
+    d.ManufacturerPartTypeName,
+    d.ManufacturerSerialNumber,
+    d.MasterFixedAsset,
+    d.Material,
+    d.MeasuringPoint,
+    d.NextEquipUsagePeriodSqncNmbr,
+    d.OperationStartDate,
+    d.OrganizationDivision,
+    d.PhoneNumber,
+    d.PlantSection,
+    d.PostalCode,
+    d.Region,
+    d.RoomNumber,
+    d.SalesGroup,
+    d.SalesOffice,
+    d.SalesOrganization,
+    d.SerialNumber,
+    d.SettlementOrder,
+    d.SizeOrDimensionText,
+    d.StreetName,
+    d.SuperordinateEquipment,
+    d.TechnicalObjectSortCode,
+    d.TechnicalObjectType,
+    d.UniqueItemIdentifier,
+    d.UniqueItemIdentifierRespPlant,
+    d.UniqueItemIdentifierStrucType,
+    d.ValidityEndTime,
+    d.ValidityStartDate,
+    d.WBSElementExternalID,
+    d.WorkCenter,
+    d.WorkCenterInternalID,
+    d.WorkCenterPlant,
+    t.is_deleted,
+    t.last_modified
+from sap_cache_equipment_Equipment_tracking t
+    left outer join TravelService_Equipment d on d.Equipment = t.Equipment and d.ValidityEndDate = t.ValidityEndDate;
+
 create view TravelService_Flight_delta as
 select
     t.AirlineID,
@@ -844,6 +987,10 @@ upsert sap_fe_cap_travel_Booking_tracking (BookingUUID, last_modified, is_delete
 upsert sap_fe_cap_travel_BookingSupplement_tracking (BookSupplUUID, last_modified, is_deleted)
     select BookSupplUUID, current_utctimestamp as last_modified, false as is_deleted from sap_fe_cap_travel_BookingSupplement;
     -- if not exists (select top 1 true from sap_fe_cap_travel_BookingSupplement_tracking)
+
+upsert sap_cache_equipment_Equipment_tracking (Equipment, ValidityEndDate, last_modified, is_deleted)
+    select Equipment, ValidityEndDate, current_utctimestamp as last_modified, false as is_deleted from sap_cache_equipment_Equipment;
+    -- if not exists (select top 1 true from sap_cache_equipment_Equipment_tracking)
 
 upsert sap_fe_cap_travel_Flight_tracking (AirlineID, FlightDate, ConnectionID, last_modified, is_deleted)
     select AirlineID, FlightDate, ConnectionID, current_utctimestamp as last_modified, false as is_deleted from sap_fe_cap_travel_Flight;
