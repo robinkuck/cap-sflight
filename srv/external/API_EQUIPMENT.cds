@@ -1,4 +1,4 @@
-/* checksum : 8a31e0e8e647dd12058bd3c3b5b2a0dc */
+/* checksum : c340dc96c2f334318697329e7db50a4f */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -812,7 +812,7 @@ service API_EQUIPMENT {
     @sap.updatable : 'false'
     Language : String(2);
     @sap.label : 'Long Text'
-    EquipmentLongText : LargeString;
+    EquipmentLongText : String;
     to_Equipment : Association to Equipment {  };
   };
 
@@ -1055,3 +1055,4 @@ service API_EQUIPMENT {
     Equipment : String(18)
   ) returns many GetRootFunctionalLocationResult_Type;
 };
+
