@@ -19,7 +19,6 @@ public class RegisterHandlers {
     public static EntityHandler handler_Currencies_texts;
     public static EntityHandler handler_Customers;
     public static EntityHandler handler_Employees;
-    public static EntityHandler handler_Equipment;
     public static EntityHandler handler_Flight;
     public static EntityHandler handler_FlightConnection;
     public static EntityHandler handler_Orders;
@@ -48,7 +47,6 @@ public class RegisterHandlers {
         handler_Currencies_texts = new com.sap.cap.sflight.delta.handler.CurrenciesTextsHandler(servlet, service);
         handler_Customers = new com.sap.cap.sflight.delta.handler.CustomersHandler(servlet, service);
         handler_Employees = new com.sap.cap.sflight.delta.handler.EmployeesHandler(servlet, service);
-        handler_Equipment = new com.sap.cap.sflight.delta.handler.EquipmentHandler(servlet, service);
         handler_Flight = new com.sap.cap.sflight.delta.handler.FlightHandler(servlet, service);
         handler_FlightConnection = new com.sap.cap.sflight.delta.handler.FlightConnectionHandler(servlet, service);
         handler_Orders = new com.sap.cap.sflight.delta.handler.OrdersHandler(servlet, service);
@@ -74,7 +72,6 @@ public class RegisterHandlers {
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts, handler_Currencies_texts);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.customers, handler_Customers);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees, handler_Employees);
-        servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.equipment, handler_Equipment);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight, handler_Flight);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection, handler_FlightConnection);
         servlet.registerEntityHandler(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.orders, handler_Orders);

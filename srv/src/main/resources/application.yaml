@@ -26,13 +26,6 @@ cds:
       path: "/"
   remote:
     services:
-      "[API_EQUIPMENT]":
-        model: "API_EQUIPMENT"
-        destination:
-          name: "MIT_S4"
-        type: "odata-v2"
-        http:
-          suffix: "/sap/opu/odata/sap"
       Northwind:
         http:
           suffix: "/V4/Northwind/"
@@ -55,11 +48,3 @@ server:
 ---
 spring:
   config.activate.on-profile: cloud
-cds:
-  messaging.services:
-    messaging:
-      kind: enterprise-messaging
-      enabled: true
-      format: cloudevents
-      publishPrefix: '$namespace/ce/'
-      subscribePrefix: '$namespace/ce/'

@@ -41,8 +41,6 @@ public abstract class ProxyServiceMetadata
 
         public static final com.sap.cloud.server.odata.EntityType employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Employees");
 
-        public static final com.sap.cloud.server.odata.EntityType equipment = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Equipment");
-
         public static final com.sap.cloud.server.odata.EntityType flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.Flight");
 
         public static final com.sap.cloud.server.odata.EntityType flightConnection = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntityType("TravelService.FlightConnection");
@@ -95,8 +93,6 @@ public abstract class ProxyServiceMetadata
         public static final com.sap.cloud.server.odata.EntitySet customers = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Customers");
 
         public static final com.sap.cloud.server.odata.EntitySet employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Employees");
-
-        public static final com.sap.cloud.server.odata.EntitySet equipment = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Equipment");
 
         public static final com.sap.cloud.server.odata.EntitySet flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Flight");
 

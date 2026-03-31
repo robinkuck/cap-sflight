@@ -17,7 +17,6 @@ public abstract class ProxyServiceFactory
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCurrenciesTexts());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.customers.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateCustomers());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateEmployees());
-        com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.equipment.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateEquipment());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlight());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateFlightConnection());
         com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.orders.registerFactory(new com.sap.cap.sflight.delta.proxy.internal.ProxyServiceFactory.CreateOrders());
@@ -211,20 +210,6 @@ public abstract class ProxyServiceFactory
         @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
         {
             return new com.sap.cap.sflight.delta.proxy.Employees(false, indexMap);
-        }
-    }
-
-    public static class CreateEquipment
-    extends com.sap.cloud.server.odata.core.ObjectFactory
-    {
-        @Override public Object create()
-        {
-            return new com.sap.cap.sflight.delta.proxy.Equipment(false);
-        }
-
-        @Override public Object createWithSparseArray(final com.sap.cloud.server.odata.core.SparseIndexMap indexMap)
-        {
-            return new com.sap.cap.sflight.delta.proxy.Equipment(false, indexMap);
         }
     }
 

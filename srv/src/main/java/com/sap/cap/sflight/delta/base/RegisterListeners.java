@@ -19,7 +19,6 @@ public class RegisterListeners {
     public static EntityListener listener_Currencies_texts;
     public static EntityListener listener_Customers;
     public static EntityListener listener_Employees;
-    public static EntityListener listener_Equipment;
     public static EntityListener listener_Flight;
     public static EntityListener listener_FlightConnection;
     public static EntityListener listener_Orders;
@@ -48,7 +47,6 @@ public class RegisterListeners {
         listener_Currencies_texts = new com.sap.cap.sflight.delta.listener.CurrenciesTextsListener(servlet, service);
         listener_Customers = new com.sap.cap.sflight.delta.listener.CustomersListener(servlet, service);
         listener_Employees = new com.sap.cap.sflight.delta.listener.EmployeesListener(servlet, service);
-        listener_Equipment = new com.sap.cap.sflight.delta.listener.EquipmentListener(servlet, service);
         listener_Flight = new com.sap.cap.sflight.delta.listener.FlightListener(servlet, service);
         listener_FlightConnection = new com.sap.cap.sflight.delta.listener.FlightConnectionListener(servlet, service);
         listener_Orders = new com.sap.cap.sflight.delta.listener.OrdersListener(servlet, service);
@@ -74,7 +72,6 @@ public class RegisterListeners {
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.currenciesTexts, listener_Currencies_texts);
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.customers, listener_Customers);
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.employees, listener_Employees);
-        servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.equipment, listener_Equipment);
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flight, listener_Flight);
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.flightConnection, listener_FlightConnection);
         servlet.registerEntityListener(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntityTypes.orders, listener_Orders);
