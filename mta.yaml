@@ -33,6 +33,7 @@ modules:
       - name: sflight-uaa
       - name: sflight-cloud-logging
       - name: sflight-eventmesh
+      - name: sflight-connectivity
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter, destinations)
         properties:
@@ -55,7 +56,8 @@ modules:
       - name: sflight-db
       - name: sflight-uaa
     build-parameters:
-      ignore: ["node_modules/"]
+      ignore:
+        - "node_modules/"
   - name: sflight-appcontent
     type: com.sap.application.content
     path: gen
@@ -198,3 +200,8 @@ resources:
     parameters:
       service: enterprise-messaging
       service-plan: default
+  - name: sflight-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
