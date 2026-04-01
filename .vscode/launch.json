@@ -6,9 +6,9 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch SFlightApplication",
+      "name": "Launch Application",
       "request": "launch",
-      "mainClass": "com.sap.cap.sflight.SFlightApplication",
+      "mainClass": "com.sap.cap.sflight.Application",
       "projectName": "srv"
     },
     {
