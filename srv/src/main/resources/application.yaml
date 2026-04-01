@@ -31,6 +31,7 @@ cds:
           suffix: "/sap/opu/odata/sap"
         destination:
           name: uxm23
+          retrievalStrategy: "AlwaysProvider"
         type: odata-v2
       Northwind:
         http:
