@@ -68,5 +68,6 @@ cds:
   messaging:
     services:
       messaging:
-        subscribePrefix: $namespace/
+        subscribePrefix: $namespace/ce/
         kind: enterprise-messaging
+        format: cloudevents
