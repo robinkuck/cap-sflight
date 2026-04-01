@@ -97,36 +97,6 @@ modules:
         - npm run build
       supported-platforms:
         []
-  - name: sflight-destinationcontent
-    type: com.sap.application.content
-    build-parameters:
-      no-source: true
-    requires:
-      - name: sflight-uaa
-        parameters:
-          service-key:
-            name: sflight-uaa-key
-      - name: sflight-html5-repo-host
-        parameters:
-          service-key:
-            name: sflight-html5-repo-host-key
-      - name: sflight-destination
-        parameters:
-          content-target: true
-    parameters:
-      content:
-        instance:
-          existing_destinations_policy: update
-          destinations:
-            - Name: sflight-html5-repository
-              ServiceInstanceName: sflight-html5-repo-host
-              ServiceKeyName: sflight-html5-repo-host-key
-              sap.cloud.service: sap.fe.cap.sflight
-            - Name: sflight-uaa
-              Authentication: OAuth2UserTokenExchange
-              ServiceInstanceName: sflight-uaa
-              ServiceKeyName: sflight-uaa-key
-              sap.cloud.service: sap.fe.cap.sflight
 
 resources:
   - name: sflight-db
@@ -173,20 +143,6 @@ resources:
     parameters:
       service: destination
       service-plan: lite
-      config:
-        version: 1.0.0
-        HTML5Runtime_enabled: true
-        init_data:
-          instance:
-            existing_destinations_policy: update
-            destinations:
-              - Name: sflight-srv
-                URL: ~{srv-api/srv-url}
-                Authentication: NoAuthentication
-                Type: HTTP
-                ProxyType: Internet
-                HTML5.ForwardAuthToken: true
-                HTML5.DynamicDestination: true
   - name: sflight-cloud-logging
     type: org.cloudfoundry.managed-service
     parameters:
