@@ -29,6 +29,8 @@ public class ProxyService
 
     public static final com.sap.cloud.server.odata.EntitySet employees = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Employees");
 
+    public static final com.sap.cloud.server.odata.EntitySet equipment = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Equipment");
+
     public static final com.sap.cloud.server.odata.EntitySet flight = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("Flight");
 
     public static final com.sap.cloud.server.odata.EntitySet flightConnection = com.sap.cap.sflight.delta.proxy.internal.ProxyServiceMetadataParser.parsed.getEntitySet("FlightConnection");
@@ -884,6 +886,63 @@ public class ProxyService
     {
         final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
         return this.getEmployees1(var_query.withKey(com.sap.cap.sflight.delta.proxy.Employees.key(employeeID)), headers, options);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.EquipmentList getEquipment()
+    {
+        return this.getEquipment(null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.EquipmentList getEquipment(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getEquipment(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.EquipmentList getEquipment(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getEquipment(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.EquipmentList getEquipment(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return com.sap.cap.sflight.delta.proxy.Equipment.list(this.executeQuery(var_query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.equipment), headers, options).getEntityList());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1(final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getEquipment1(query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getEquipment1(query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1(final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        return com.sap.cap.sflight.delta.proxy.internal.Any_as_com_sap_cap_sflight_delta_proxy_Equipment.cast(this.executeQuery(query.fromDefault(com.sap.cap.sflight.delta.proxy.ProxyServiceMetadata.EntitySets.equipment), headers, options).getRequiredEntity());
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1WithKey(final String equipment, final com.sap.cloud.server.odata.LocalDate validityEndDate)
+    {
+        return this.getEquipment1WithKey(equipment, validityEndDate, null, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1WithKey(final String equipment, final com.sap.cloud.server.odata.LocalDate validityEndDate, final com.sap.cloud.server.odata.DataQuery query)
+    {
+        return this.getEquipment1WithKey(equipment, validityEndDate, query, null, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1WithKey(final String equipment, final com.sap.cloud.server.odata.LocalDate validityEndDate, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers)
+    {
+        return this.getEquipment1WithKey(equipment, validityEndDate, query, headers, null);
+    }
+
+    public com.sap.cap.sflight.delta.proxy.Equipment getEquipment1WithKey(final String equipment, final com.sap.cloud.server.odata.LocalDate validityEndDate, final com.sap.cloud.server.odata.DataQuery query, final com.sap.cloud.server.odata.http.HttpHeaders headers, final com.sap.cloud.server.odata.RequestOptions options)
+    {
+        final com.sap.cloud.server.odata.DataQuery var_query = com.sap.cloud.server.odata.DataQuery.newIfNull(query);
+        return this.getEquipment1(var_query.withKey(com.sap.cap.sflight.delta.proxy.Equipment.key(equipment, validityEndDate)), headers, options);
     }
 
     public com.sap.cap.sflight.delta.proxy.FlightList getFlight()
