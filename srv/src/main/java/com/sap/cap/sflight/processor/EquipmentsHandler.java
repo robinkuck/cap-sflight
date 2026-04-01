@@ -5,13 +5,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.sap.cds.CdsData;
 import com.sap.cds.ql.CQL;
 import com.sap.cds.ql.Insert;
 import com.sap.cds.ql.Select;
+import com.sap.cds.ql.Upsert;
 import com.sap.cds.ql.cqn.CqnPredicate;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.services.cds.CdsReadEventContext;
@@ -25,6 +28,7 @@ import com.sap.cds.services.messaging.TopicMessageEventContext;
 import cds.gen.api_equipment.ApiEquipment_;
 import cds.gen.api_equipment.EquipmentChangedContext;
 import cds.gen.api_equipment.EquipmentCreatedContext;
+import cds.gen.sap.cache.equipment.Equipment;
 import cds.gen.travelservice.TravelService_;
 
 @Component
@@ -39,6 +43,10 @@ public class EquipmentsHandler implements EventHandler {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    @Qualifier(ApiEquipment_.CDS_NAME)
+    private CqnService apiEquipment;
+
     @On(event = EquipmentCreatedContext.CDS_NAME) 
     public void onEquipmentCreated(EquipmentCreatedContext context) {
         logger.info("Received Equipment Created Event");
@@ -47,6 +55,13 @@ public class EquipmentsHandler implements EventHandler {
     @On(event = EquipmentChangedContext.CDS_NAME) 
     public void onEquipmentChanged(EquipmentChangedContext context) {
         logger.info("Received Equipment Changed Event");
+
+        final cds.gen.api_equipment.Equipment equipment = apiEquipment.run(Select.from(cds.gen.api_equipment.Equipment_.class)
+            .where(e -> e.Equipment().eq(context.data().equipment()).and(e.ValidityEndDate().eq(context.data().validityEndDate()))))
+            .single(cds.gen.api_equipment.Equipment.class);
+        CdsData data = CdsData.create(equipment);
+        
+        db.run(Upsert.into(cds.gen.sap.cache.equipment.Equipment_.class).entry(data));
     }
 
     /*
