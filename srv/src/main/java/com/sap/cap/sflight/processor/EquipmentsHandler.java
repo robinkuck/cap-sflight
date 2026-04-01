@@ -23,10 +23,11 @@ import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.messaging.TopicMessageEventContext;
 
 import cds.gen.api_equipment.EquipmentChangedContext;
+import cds.gen.api_equipment.EquipmentCreatedContext;
 import cds.gen.travelservice.TravelService_;
 
 @Component
-@ServiceName(TravelService_.CDS_NAME)
+@ServiceName(cds.gen.api_equipment.ApiEquipment_.CDS_NAME)
 public class EquipmentsHandler implements EventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(EquipmentsHandler.class);
@@ -36,6 +37,11 @@ public class EquipmentsHandler implements EventHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @On(event = EquipmentCreatedContext.CDS_NAME) 
+    public void onEquipmentCreated(EquipmentCreatedContext context) {
+        logger.info("Received Equipment Created Event");
+    }
 
     @On(event = EquipmentChangedContext.CDS_NAME) 
     public void onEquipmentChanged(EquipmentChangedContext context) {
