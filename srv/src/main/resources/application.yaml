@@ -26,13 +26,12 @@ cds:
       path: "/"
   remote:
     services:
-      "[API_EQUIPMENT]":
-        model: "API_EQUIPMENT"
-        destination:
-          name: "uxm23"
-        type: "odata-v2"
+      '[API_EQUIPMENT]':
         http:
           suffix: "/sap/opu/odata/sap"
+        destination:
+          name: uxm23
+        type: odata-v2
       Northwind:
         http:
           suffix: "/V4/Northwind/"
@@ -54,12 +53,23 @@ server:
   port: 4004
 ---
 spring:
-  config.activate.on-profile: cloud
+  config:
+    activate:
+      on-profile: cloud
 cds:
-  messaging.services:
-    messaging:
-      kind: enterprise-messaging
-      enabled: true
-      format: cloudevents
-      publishPrefix: '$namespace/ce/'
-      subscribePrefix: '$namespace/ce/'
+  remote:
+    services:
+      '[API_EQUIPMENT]':
+        http:
+          suffix: "/sap/opu/odata/sap"
+        destination:
+          name: uxm23
+        type: odata-v2
+  messaging:
+    services:
+      messaging:
+        subscribePrefix: $namespace/ce/
+        publishPrefix: $namespace/ce/
+        kind: enterprise-messaging
+        format: cloudevents
+        enabled: true
