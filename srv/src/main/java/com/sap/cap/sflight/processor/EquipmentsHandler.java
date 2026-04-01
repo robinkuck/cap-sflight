@@ -36,6 +36,11 @@ public class EquipmentsHandler implements EventHandler {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @On(service = "messaging")
+    public void onHandleMessage(TopicMessageEventContext context) {
+        logger.info("Received event!");
+    }
+
     @On(service = "messaging", event = { "sap/s4/beh/equipment/v1/Equipment/Created/v1" })
     public void onCreateEquipment(TopicMessageEventContext context) {
         logger.info("Received Create Equipment Event for Equipment {}", context.getDataMap().get("Equipment"));
