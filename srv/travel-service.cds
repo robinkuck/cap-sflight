@@ -4,11 +4,11 @@ using { sap.cache.equipment as equipment } from '../db/equipment';
 using { API_EQUIPMENT } from './external/API_EQUIPMENT';
 
 extend service API_EQUIPMENT with {
-  event Equipment.Created @(topic:'sap.s4.beh.equipment.v1.Equipment.Created.v1') {
+  event Equipment.Created @(topic:'sap/s4/beh/equipment/v1/Equipment/Created/v1') {
     Equipment : String;
     ValidityEndDate: Date;
   }
-  event Equipment.Changed @(topic:'sap.s4.beh.equipment.v1.Equipment.Changed.v1') {
+  event Equipment.Changed @(topic:'sap/s4/beh/equipment/v1/Equipment/Changed/v1') {
     Equipment : String;
     ValidityEndDate: Date;
   }

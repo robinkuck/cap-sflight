@@ -22,12 +22,13 @@ import com.sap.cds.services.persistence.PersistenceService;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.messaging.TopicMessageEventContext;
 
+import cds.gen.api_equipment.ApiEquipment_;
 import cds.gen.api_equipment.EquipmentChangedContext;
 import cds.gen.api_equipment.EquipmentCreatedContext;
 import cds.gen.travelservice.TravelService_;
 
 @Component
-@ServiceName(cds.gen.api_equipment.ApiEquipment_.CDS_NAME)
+@ServiceName(ApiEquipment_.CDS_NAME)
 public class EquipmentsHandler implements EventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(EquipmentsHandler.class);
