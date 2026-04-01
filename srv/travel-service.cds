@@ -1,6 +1,7 @@
 using { sap.fe.cap.travel as my } from '../db/schema';
 using { Northwind as external } from './external/Northwind';
 using { sap.cache.equipment as equipment } from '../db/equipment';
+using { API_EQUIPMENT } from './external/API_EQUIPMENT';
 
 service TravelService @(path:'/processor') {
 

@@ -729,12 +729,14 @@ service API_EQUIPMENT {
     @sap.creatable : 'false'
     @sap.updatable : 'false'
     ValidityEndDate : Date;
+    /*
     @sap.display.format : 'UpperCase'
     @sap.label : 'Class'
     @sap.quickinfo : 'Class number'
     @sap.creatable : 'false'
     @sap.updatable : 'false'
     Class : String(18);
+    */
     to_Equipment : Association to Equipment {  };
     to_Characteristic : Composition of many EquipmentClassCharacteristic {  };
   };
@@ -779,12 +781,14 @@ service API_EQUIPMENT {
     @sap.label : 'Class Type'
     @sap.updatable : 'false'
     ClassType : String(3);
+    /*
     @sap.display.format : 'UpperCase'
     @sap.label : 'Class'
     @sap.quickinfo : 'Class number'
     @sap.creatable : 'false'
     @sap.updatable : 'false'
     Class : String(18);
+    */
     to_EquipmentClass : Association to EquipmentClass {  };
     to_Equipment : Association to Equipment {  };
     to_Value : Composition of many EquipClassCharacteristicValue {  };
