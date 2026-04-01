@@ -29,7 +29,7 @@ cds:
       "[API_EQUIPMENT]":
         model: "API_EQUIPMENT"
         destination:
-          name: "MIT_S4"
+          name: "uxm23"
         type: "odata-v2"
         http:
           suffix: "/sap/opu/odata/sap"
