@@ -22,6 +22,7 @@ import com.sap.cds.services.persistence.PersistenceService;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.messaging.TopicMessageEventContext;
 
+import cds.gen.api_equipment.EquipmentChangedContext;
 import cds.gen.travelservice.TravelService_;
 
 @Component
@@ -36,6 +37,12 @@ public class EquipmentsHandler implements EventHandler {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @On(event = EquipmentChangedContext.CDS_NAME) 
+    public void onEquipmentChanged(EquipmentChangedContext context) {
+        logger.info("Received Equipment Changed Event");
+    }
+
+    /*
     @On(service = "messaging")
     public void onHandleMessage(TopicMessageEventContext context) {
         logger.info("Received event!");
@@ -50,6 +57,7 @@ public class EquipmentsHandler implements EventHandler {
     public void onChangeEquipment(TopicMessageEventContext context) {
         logger.info("Received Update Equipment Event for Equipment {}", context.getDataMap().get("Equipment"));
     }
+    */
 
     // This is an example how the internal filter based on the delta token (timestamp) in the query parameter of the subsequent download requests from the client could be implemented
     /* 
