@@ -54,35 +54,24 @@ public class EquipmentsHandler implements EventHandler {
 
     @On(event = EquipmentChangedContext.CDS_NAME) 
     public void onEquipmentChanged(EquipmentChangedContext context) {
-        logger.info("Received Equipment Changed Event");
+        context.getCdsRuntime().requestContext().privilegedUser().run(newContext -> {
+            logger.info("Received Equipment Changed Event");
 
-        final cds.gen.api_equipment.Equipment equipment = apiEquipment.run(Select.from(cds.gen.api_equipment.Equipment_.class)
-            .where(e -> e.Equipment().eq(context.data().equipment()).and(e.ValidityEndDate().eq(context.data().validityEndDate()))))
-            .single(cds.gen.api_equipment.Equipment.class);
-        CdsData data = CdsData.create(equipment);
-        
-        db.run(Upsert.into(cds.gen.sap.cache.equipment.Equipment_.class).entry(data));
-    }
+            // Fetch complete equipment from API_EQUIPMENT based on the key fields in the
+            // event and upsert into the cache DB
+            final cds.gen.api_equipment.Equipment equipment = apiEquipment
+                    .run(Select.from(cds.gen.api_equipment.Equipment_.class)
+                            .where(e -> e.Equipment().eq(context.data().equipment())
+                                    .and(e.ValidityEndDate().eq(context.data().validityEndDate()))))
+                    .single(cds.gen.api_equipment.Equipment.class);
+            CdsData data = CdsData.create(equipment);
 
-    /*
-    @On(service = "messaging")
-    public void onHandleMessage(TopicMessageEventContext context) {
-        logger.info("Received event!");
+            db.run(Upsert.into(cds.gen.sap.cache.equipment.Equipment_.class).entry(data));
+        });
     }
-
-    @On(service = "messaging", event = { "sap/s4/beh/equipment/v1/Equipment/Created/v1" })
-    public void onCreateEquipment(TopicMessageEventContext context) {
-        logger.info("Received Create Equipment Event for Equipment {}", context.getDataMap().get("Equipment"));
-    }
-
-    @On(service = "messaging", event = { "sap/s4/beh/equipment/v1/Equipment/Changed/v1" })
-    public void onChangeEquipment(TopicMessageEventContext context) {
-        logger.info("Received Update Equipment Event for Equipment {}", context.getDataMap().get("Equipment"));
-    }
-    */
 
     // This is an example how the internal filter based on the delta token (timestamp) in the query parameter of the subsequent download requests from the client could be implemented
-    /* 
+    /*
     @On(event = CqnService.EVENT_READ, entity = Equipment_.CDS_NAME)
     public Result onReadEquipments(CdsReadEventContext context) {
         final String deltaToken = context.getParameterInfo().getQueryParameter("deltatoken");
